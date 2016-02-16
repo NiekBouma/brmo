@@ -51,13 +51,14 @@ before_test:
   - sqlcmd -S (local)\SQL2012SP1 -U sa -P Password12! -d "staging" -i .\brmo-persistence\db\01_create_indexes.sql
   - sqlcmd -S (local)\SQL2012SP1 -U sa -P Password12! -d "staging" -i .\brmo-persistence\db\02_insert_default_user.sql
 
-# TODO configure sql server to listen on ip address, see: https://www.appveyor.com/docs/services-databases
+
 
 test_script:
 # run unit tests
   - mvn -e test -B -Pappveyor-ci -pl "!brmo-dist"
 # run integration tests
-#  - mvn -e verify -B -Pappveyor-ci -pl "!brmo-dist"
+# TODO configure sql server to listen on ip address, see: https://www.appveyor.com/docs/services-databases
+  - mvn -e verify -B -Pappveyor-ci -pl "!brmo-dist"
 
 after_test:
   - ps: Get-Date

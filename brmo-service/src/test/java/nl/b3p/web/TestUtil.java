@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Properties;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.junit.AfterClass;
@@ -21,11 +20,12 @@ public abstract class TestUtil {
      */
     public static final String BASE_TEST_URL = "http://localhost:9090/brmo-service/";
     /**
-     * This has the database properties as defined in 'postgres.properties'.
+     * This has the database properties as defined in 'postgres.properties' or
+     * sqlserver.properties.
      *
      * @see #loadDBprop()
      */
-    protected static final Properties POSTGRESPROPS = new Properties();
+    protected static final Properties DBPROPS = new Properties();
 
     /**
      * our test client.
@@ -39,7 +39,8 @@ public abstract class TestUtil {
      */
     @BeforeClass
     public static void loadDBprop() throws IOException {
-        POSTGRESPROPS.load(IndexPageIntegrationTest.class.getClassLoader().getResourceAsStream("postgres.properties"));
+        DBPROPS.load(IndexPageIntegrationTest.class.getClassLoader()
+                .getResourceAsStream(System.getProperty("database.properties.file")));
     }
 
     /**

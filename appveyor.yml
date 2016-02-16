@@ -50,7 +50,9 @@ before_test:
   - dir -w .\brmo-persistence\db\
   - sqlcmd -S (local)\SQL2012SP1 -U sa -P Password12! -d "staging" -i .\brmo-persistence\db\01_create_indexes.sql
   - sqlcmd -S (local)\SQL2012SP1 -U sa -P Password12! -d "staging" -i .\brmo-persistence\db\02_insert_default_user.sql
-
+  - ps: .\.appveyor\setting-tcp-ip-ports.ps1
+  - net stop "SQL Server (SQL2012)"
+  - net start "SQL Server (SQL2012)"
 
 
 test_script:
